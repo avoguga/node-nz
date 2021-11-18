@@ -13,22 +13,32 @@ const storageTypes = {
             crypto.randomBytes(16, (err, hash) => {
                 if (err) cb(err);
 
-                const fileName = `${hash.toString('hex')}-${file.originalname}`;
+                file.key = `${hash.toString('hex')}-${file.originalname}`;
 
-                cb(null, fileName);
+                cb(null, file.key);
             })
         },
     }),
     s3: multerS3({
         s3: new aws.S3(),
-        bucket: 'nz-mongo-user',
-        contentType: multerS3.AUTO_CONTENT_TYPE,
+        bucket: 'nz-nodejs',
+        contentType: multerS3.AUTO_CONTENT_TYPE,    
+        acl: 'public-read',
+        key: (req, file, cb) => {
+            crypto.randomBytes(16, (err, hash) => {
+                if (err) cb(err);
+
+                const fileName = `${hash.toString('hex')}-${file.originalname}`;
+
+                cb(null, fileName);
+            })
+        }
     })
 }
 
 module.exports = {
     dest: path.resolve(__dirname, '..', '..', 'tmp', 'uploads'),
-    storage: ,
+    storage: storageTypes[process.env.STORAGE_TYPE],
     limits: {
         fileSize: 2 * 1024 * 1024,
     },
