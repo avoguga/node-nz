@@ -1,0 +1,19 @@
+{
+  "name": "backend-nz-node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "-": "^0.0.1",
+    "D": "^1.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.3",
+    "nodemon": "^2.0.15"
+  }
+}
